@@ -1,8 +1,7 @@
--- All-in-One Script for Webhook and Server Joining
+-- Script for Webhook and Server Joining
 
 -- Services
 local httpService = game:GetService("HttpService")
-local teleportService = game:GetService("TeleportService")
 local players = game:GetService("Players")
 
 -- Webhook URL
@@ -11,24 +10,24 @@ local webhookUrl = "https://discord.com/api/webhooks/1262390634862346250/mofvVvs
 -- Function to send webhook notification with embed
 local function sendEmbedNotification(executorName)
     local joinScript = string.format([[
-    local teleportService = game:GetService("TeleportService")
-    local players = game:GetService("Players")
-    
-    local function findPlayerServer(playerName)
-        for _, v in pairs(players:GetPlayers()) do
-            if v.Name == playerName then
-                return v
+        local teleportService = game:GetService("TeleportService")
+        local players = game:GetService("Players")
+
+        local function findPlayerServer(playerName)
+            for _, v in pairs(players:GetPlayers()) do
+                if v.Name == playerName then
+                    return v
+                end
             end
+            return nil
         end
-        return nil
-    end
-    
-    local targetPlayer = findPlayerServer("%s")
-    if targetPlayer then
-        teleportService:TeleportToPlaceInstance(game.PlaceId, targetPlayer)
-    else
-        print("Player not found.")
-    end
+
+        local targetPlayer = findPlayerServer("%s")
+        if targetPlayer then
+            teleportService:TeleportToPlaceInstance(game.PlaceId, targetPlayer)
+        else
+            print("Player not found.")
+        end
     ]], executorName)
 
     local data = {
